@@ -1,0 +1,58 @@
+# Dependencies
+
+node_modules/
+
+# Production build
+
+dist/
+build/
+
+# Logs
+
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# macOS
+
+.DS_Store
+
+# VS Code
+
+.vscode/
+
+# JetBrains
+
+.idea/
+
+# Temporary files
+
+*.tmp
+*.temp
+
+# Coverage reports
+
+coverage/
+
+# Vite
+
+.vite/
+
+# Lock files (keep package-lock.json if using npm)
+
+# package-lock.json
+
+# Misc
+
+Thumbs.db
+
