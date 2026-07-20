@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { Clipboard, Check, BookOpen, Code2, FileText, ShieldCheck, KanbanSquare, Download, Search, Lock, Unlock, Table2, KeyRound } from 'lucide-react';
+import { Clipboard, Check, BookOpen, Code2, FileText, ShieldCheck, KanbanSquare, Download, Search, Lock, Unlock, Table2, KeyRound, Video, ExternalLink, GraduationCap } from 'lucide-react';
 import './styles.css';
 
 const semesterOne = [
@@ -216,6 +216,145 @@ const answerKey = [
 ];
 
 
+const weeklyResources = {
+  '1-1': {
+    video: { title: 'Weather emergencies and why alert systems matter', url: 'https://www.youtube.com/results?search_query=Bureau+of+Meteorology+Australia+weather+warnings+explained', note: 'Use a short BOM/weather-warning explainer to introduce the real-world problem.' },
+    learn: [
+      { title: 'Bureau of Meteorology – Warnings', url: 'https://www.bom.gov.au/weather-and-climate/warnings-and-alerts', type: 'Core' },
+      { title: 'OpenWeather – Current Weather Data', url: 'https://openweathermap.org/current', type: 'Support' }
+    ],
+    tryIt: 'Choose one weather hazard. Identify who is affected, what decision they need to make, and what information an alert app should provide.'
+  },
+  '1-2': {
+    video: { title: 'User stories and success criteria', url: 'https://www.youtube.com/results?search_query=user+stories+acceptance+criteria+agile+students', note: 'Choose a concise introduction to the “As a… I want… so that…” format.' },
+    learn: [
+      { title: 'Atlassian – User stories', url: 'https://www.atlassian.com/agile/project-management/user-stories', type: 'Core' },
+      { title: 'Interaction Design Foundation – Usability', url: 'https://www.interaction-design.org/literature/topics/usability', type: 'Support' }
+    ],
+    tryIt: 'Rewrite one vague app idea as a user story, then create one measurable success criterion that could be tested.'
+  },
+  '1-3': {
+    video: { title: 'APIs, JSON and client-server systems', url: 'https://www.youtube.com/results?search_query=what+is+an+API+JSON+client+server+explained', note: 'Look for an introductory API/client-server video before students inspect JSON.' },
+    learn: [
+      { title: 'MDN – Introduction to Web APIs', url: 'https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Client-side_APIs/Introduction', type: 'Core' },
+      { title: 'JSON.org – Introducing JSON', url: 'https://www.json.org/json-en.html', type: 'Core' },
+      { title: 'MDN – Client-server overview', url: 'https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Server-side/First_steps/Client-Server_overview', type: 'Extension' }
+    ],
+    tryIt: 'Inspect a sample weather JSON response. Locate temperature, condition, wind speed and location fields, then explain which ones your app actually needs.'
+  },
+  '1-4': {
+    video: { title: 'Data Flow Diagrams (DFDs)', url: 'https://www.youtube.com/results?search_query=data+flow+diagram+level+0+level+1+tutorial', note: 'Use a beginner DFD video covering external entities, processes, data stores and data flows.' },
+    learn: [
+      { title: 'Lucidchart – Data Flow Diagram guide', url: 'https://www.lucidchart.com/pages/data-flow-diagram', type: 'Core' },
+      { title: 'diagrams.net – Free diagram tool', url: 'https://app.diagrams.net/', type: 'Support' }
+    ],
+    tryIt: 'On paper first, draw User → App → Weather API → App → User. Then expand the App into request, decode, check alert and display processes.'
+  },
+  '1-5': {
+    video: { title: 'Wireframes, UI and accessibility', url: 'https://www.youtube.com/results?search_query=wireframing+UI+UX+accessibility+beginner+tutorial', note: 'Choose a simple wireframing video that focuses on layout before visual polish.' },
+    learn: [
+      { title: 'Apple – Accessibility', url: 'https://developer.apple.com/accessibility/', type: 'Core' },
+      { title: 'Nielsen Norman Group – Wireflows/Wireframes', url: 'https://www.nngroup.com/articles/wireflows/', type: 'Support' }
+    ],
+    tryIt: 'Sketch two interface options. Compare which makes the alert easiest to notice and which is easiest to operate quickly.'
+  },
+  '1-6': {
+    video: { title: 'SwiftUI essentials', url: 'https://developer.apple.com/swiftui/get-started/', note: 'Apple’s SwiftUI Get Started page includes official learning video/tutorial pathways.' },
+    learn: [
+      { title: 'Swift.org – Build an iOS app with SwiftUI', url: 'https://swift.org/getting-started/swiftui/', type: 'Core' },
+      { title: 'Apple – SwiftUI documentation', url: 'https://developer.apple.com/documentation/swiftui', type: 'Support' }
+    ],
+    tryIt: 'Create a screen containing a title, temperature placeholder, condition placeholder and Refresh button. Change at least one layout property.'
+  },
+  '1-7': {
+    video: { title: 'Fetching and decoding JSON in Swift', url: 'https://www.youtube.com/results?search_query=Swift+URLSession+JSONDecoder+beginner+tutorial', note: 'Use a recent beginner tutorial demonstrating URLSession and Codable/JSONDecoder.' },
+    learn: [
+      { title: 'Apple – URLSession', url: 'https://developer.apple.com/documentation/foundation/urlsession', type: 'Core' },
+      { title: 'Apple – JSONDecoder', url: 'https://developer.apple.com/documentation/foundation/jsondecoder', type: 'Support' },
+      { title: 'OpenWeather – Current Weather Data', url: 'https://openweathermap.org/current', type: 'Core' }
+    ],
+    tryIt: 'Trace the data journey: URL → request → response data → decode → Swift property → interface. Annotate each stage in your own words.'
+  },
+  '1-8': {
+    video: { title: 'Testing a prototype and using peer feedback', url: 'https://www.youtube.com/results?search_query=usability+testing+prototype+peer+feedback+students', note: 'Choose a short usability-testing introduction focused on observable evidence.' },
+    learn: [
+      { title: 'Nielsen Norman Group – Usability testing 101', url: 'https://www.nngroup.com/articles/usability-testing-101/', type: 'Core' },
+      { title: 'Apple – Human Interface Guidelines', url: 'https://developer.apple.com/design/human-interface-guidelines/', type: 'Extension' }
+    ],
+    tryIt: 'Give your app to a peer without explaining it. Record what they do, where they hesitate and one improvement you can justify from the evidence.'
+  },
+  '2-1': {
+    video: { title: 'Algorithms, pseudocode and selection', url: 'https://www.youtube.com/results?search_query=pseudocode+if+else+selection+algorithm+tutorial+beginners', note: 'Use a beginner video that links pseudocode decisions to if/else code.' },
+    learn: [
+      { title: 'Swift Book – Control Flow', url: 'https://docs.swift.org/swift-book/documentation/the-swift-programming-language/controlflow/', type: 'Core' },
+      { title: 'BBC Bitesize – Algorithms and programming concepts', url: 'https://www.bbc.co.uk/bitesize/subjects/z34k7ty', type: 'Support' }
+    ],
+    tryIt: 'Write an IF/ELSE rule for one alert threshold. Test it using one value below and one value above the threshold.'
+  },
+  '2-2': {
+    video: { title: 'Object-oriented programming and classes', url: 'https://www.youtube.com/results?search_query=object+oriented+programming+classes+objects+beginner+Swift', note: 'Choose an OOP overview explaining classes, properties, methods and responsibilities.' },
+    learn: [
+      { title: 'Swift Book – Classes and Structures', url: 'https://docs.swift.org/swift-book/documentation/the-swift-programming-language/classesandstructures/', type: 'Core' },
+      { title: 'Swift.org – The Swift Programming Language', url: 'https://docs.swift.org/swift-book/documentation/the-swift-programming-language/', type: 'Support' }
+    ],
+    tryIt: 'List three responsibilities in your app and decide which class should own each responsibility. Explain why.'
+  },
+  '2-3': {
+    video: { title: 'Multiple conditions and decision logic', url: 'https://www.youtube.com/results?search_query=Swift+multiple+conditions+if+else+logical+operators+tutorial', note: 'Use a tutorial showing AND/OR, else-if chains and testing multiple conditions.' },
+    learn: [
+      { title: 'Swift Book – Basic Operators', url: 'https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/', type: 'Core' },
+      { title: 'OpenWeather – Weather condition codes', url: 'https://openweathermap.org/weather-conditions', type: 'Support' }
+    ],
+    tryIt: 'Create a test table for heat, wind and rain triggers. Include input, expected output and actual output.'
+  },
+  '2-4': {
+    video: { title: 'Cybersecurity, privacy and API key safety', url: 'https://www.youtube.com/results?search_query=API+key+security+privacy+cybersecurity+beginners', note: 'Choose a security explainer that stresses secrets should not be hard-coded or committed publicly.' },
+    learn: [
+      { title: 'OWASP – REST Security Cheat Sheet', url: 'https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html', type: 'Core' },
+      { title: 'OWASP – Key Management Cheat Sheet', url: 'https://cheatsheetseries.owasp.org/cheatsheets/Key_Management_Cheat_Sheet.html', type: 'Support' },
+      { title: 'OAIC – Australian Privacy Principles', url: 'https://www.oaic.gov.au/privacy/australian-privacy-principles', type: 'Extension' }
+    ],
+    tryIt: 'Identify one privacy risk and one security risk in a weather app. For each, propose a practical mitigation.'
+  },
+  '2-5': {
+    video: { title: 'Agile, Kanban and sprint planning', url: 'https://www.youtube.com/results?search_query=agile+kanban+sprint+planning+beginner+tutorial', note: 'Use an Agile/Kanban overview before students create sprint goals and task boards.' },
+    learn: [
+      { title: 'Atlassian – Agile tutorials', url: 'https://www.atlassian.com/agile/tutorials', type: 'Core' },
+      { title: 'Atlassian – Kanban tutorial', url: 'https://www.atlassian.com/agile/tutorials/how-to-do-kanban-with-jira', type: 'Support' }
+    ],
+    tryIt: 'Create a sprint goal, then place at least six tasks into To Do, Doing and Done. Keep each task small enough to complete or review.'
+  },
+  '2-6': {
+    video: { title: 'Debugging and iterative refinement', url: 'https://www.youtube.com/results?search_query=debugging+software+testing+iterative+development+beginners', note: 'Choose a debugging video that models reproduce → isolate → change → retest.' },
+    learn: [
+      { title: 'Apple – Debugging', url: 'https://developer.apple.com/documentation/xcode/debugging', type: 'Core' },
+      { title: 'Atlassian – Iterative process', url: 'https://www.atlassian.com/agile/project-management/iterative-process', type: 'Support' }
+    ],
+    tryIt: 'Choose one bug. Record the symptom, likely cause, attempted fix and retest result. Capture before/after evidence.'
+  },
+  '2-7': {
+    video: { title: 'Software testing and evaluation', url: 'https://www.youtube.com/results?search_query=software+testing+test+cases+expected+actual+results+beginner', note: 'Use a test-case video that distinguishes expected and actual results.' },
+    learn: [
+      { title: 'Nielsen Norman Group – Usability testing 101', url: 'https://www.nngroup.com/articles/usability-testing-101/', type: 'Core' },
+      { title: 'Apple – Human Interface Guidelines', url: 'https://developer.apple.com/design/human-interface-guidelines/', type: 'Support' }
+    ],
+    tryIt: 'Write three test cases: normal data, boundary/threshold data and alert data. Record expected result, actual result and pass/fail.'
+  },
+  '2-8': {
+    video: { title: 'Evaluating a digital solution and reflecting on impacts', url: 'https://www.youtube.com/results?search_query=evaluating+digital+solution+reflection+strengths+limitations+improvements', note: 'Choose a reflection/evaluation explainer that uses evidence rather than unsupported opinions.' },
+    learn: [
+      { title: 'OAIC – Privacy fundamentals', url: 'https://www.oaic.gov.au/privacy/your-privacy-rights', type: 'Core' },
+      { title: 'Australian Digital Inclusion Index', url: 'https://www.digitalinclusionindex.org.au/', type: 'Extension' }
+    ],
+    tryIt: 'Select one user story and one success criterion. Use testing evidence to judge how well the final app meets each, then identify a justified improvement.'
+  }
+};
+
+function getResources(week) {
+  return weeklyResources[`${week.semester}-${week.week}`];
+}
+
+
 function App() {
   const [selected, setSelected] = useState(allWeeks[0]);
   const [query, setQuery] = useState('');
@@ -310,6 +449,8 @@ function App() {
           <Card icon={selected.semester === 1 ? <Code2/> : <KanbanSquare/>} title="Teacher Note"><p>{selected.semester === 1 ? 'Focus on progressive IA1 evidence: user needs, API data, DFDs, UI design, MVP build and short explanation.' : 'Focus on IA2 evidence: OOP, multiple triggers, Agile tracking, privacy/security, testing and 400–600 word reflection.'}</p></Card>
         </section>
 
+        <LearningResources week={selected} />
+
         <section className="scaffold-panel">
           <div className="panel-header">
             <div>
@@ -341,6 +482,68 @@ function App() {
 
 
 
+function LearningResources({ week }) {
+  const resources = getResources(week);
+  if (!resources) return null;
+  return (
+    <section className="learning-resources">
+      <div className="resources-heading">
+        <div>
+          <p className="eyebrow">Learn before you write</p>
+          <h3>Teaching Videos & Training Resources</h3>
+          <p>Use these resources to learn and practise the concept. Complete assessed writing in the Student Evidence App.</p>
+        </div>
+      </div>
+      <div className="resource-grid">
+        <article className="resource-card featured-resource">
+          <div className="resource-icon"><Video size={22}/></div>
+          <span className="resource-type core">WATCH</span>
+          <h4>{resources.video.title}</h4>
+          <p>{resources.video.note}</p>
+          <a href={resources.video.url} target="_blank" rel="noreferrer">Open teaching video <ExternalLink size={16}/></a>
+        </article>
+        {resources.learn.map((resource, i) => (
+          <article className="resource-card" key={i}>
+            <div className="resource-icon"><BookOpen size={22}/></div>
+            <span className={`resource-type ${resource.type.toLowerCase()}`}>{resource.type}</span>
+            <h4>{resource.title}</h4>
+            <p>{resource.type === 'Core' ? 'Recommended learning resource for this week.' : resource.type === 'Support' ? 'Use this when you need another explanation or example.' : 'Explore this for deeper learning and extension.'}</p>
+            <a href={resource.url} target="_blank" rel="noreferrer">Open resource <ExternalLink size={16}/></a>
+          </article>
+        ))}
+      </div>
+      <div className="try-it">
+        <div className="resource-icon"><GraduationCap size={22}/></div>
+        <div><strong>Try It – Guided Practice</strong><p>{resources.tryIt}</p></div>
+      </div>
+    </section>
+  );
+}
+
+function TeacherResources() {
+  return (
+    <div className="teacher-resource-list">
+      {allWeeks.map((week) => {
+        const r = getResources(week);
+        return (
+          <article className="teacher-resource-week" key={`${week.semester}-${week.week}`}>
+            <div className="teacher-resource-title">
+              <div><span>S{week.semester} W{week.week}</span><h3>{week.title}</h3></div>
+              <a href={r.video.url} target="_blank" rel="noreferrer"><Video size={16}/> Teaching video</a>
+            </div>
+            <p className="teacher-resource-note">{r.video.note}</p>
+            <div className="teacher-resource-links">
+              {r.learn.map((item, i) => <a key={i} href={item.url} target="_blank" rel="noreferrer"><span className={`resource-type ${item.type.toLowerCase()}`}>{item.type}</span>{item.title}<ExternalLink size={14}/></a>)}
+            </div>
+            <div className="teacher-practice"><strong>Suggested practice:</strong> {r.tryIt}</div>
+          </article>
+        );
+      })}
+    </div>
+  );
+}
+
+
 function TeacherPinForm({ pin, setPin, pinError, unlockTeacher }) {
   return (
     <section className="pin-panel">
@@ -365,7 +568,7 @@ function TeacherSection({ teacherTab, setTeacherTab, lock }) {
         <div>
           <p className="eyebrow">Protected teacher area</p>
           <h2>Year 10 Digital Technologies Teacher Section</h2>
-          <p>TLAP mapping and suggested answer guide for the Weather Emergency Alert App unit.</p>
+          <p>TLAP mapping, suggested answer guide and curated teaching resources for the Weather Emergency Alert App unit.</p>
         </div>
         <button className="lock-button" onClick={lock}><Lock size={18}/> Lock</button>
       </div>
@@ -373,9 +576,10 @@ function TeacherSection({ teacherTab, setTeacherTab, lock }) {
       <div className="teacher-tabs">
         <button className={teacherTab === 'tlap' ? 'active' : ''} onClick={() => setTeacherTab('tlap')}><Table2 size={18}/> TLAP Map</button>
         <button className={teacherTab === 'answers' ? 'active' : ''} onClick={() => setTeacherTab('answers')}><Check size={18}/> Answer Key</button>
+        <button className={teacherTab === 'resources' ? 'active' : ''} onClick={() => setTeacherTab('resources')}><GraduationCap size={18}/> Resources</button>
       </div>
 
-      {teacherTab === 'tlap' ? <TLAPTable /> : <AnswerKey />}
+      {teacherTab === 'tlap' ? <TLAPTable /> : teacherTab === 'answers' ? <AnswerKey /> : <TeacherResources />}
     </section>
   );
 }
